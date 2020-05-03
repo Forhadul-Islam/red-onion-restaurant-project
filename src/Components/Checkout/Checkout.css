@@ -1,0 +1,42 @@
+.reviewArea {
+    display: flex;
+    flex-direction: row;
+}
+.deliveryForm {
+    width: 45%;
+}
+
+.ProductReview {
+    width: 55%;
+    padding: 20px;
+    margin: 20px 3px 20px 20px;
+}
+.cartButton {
+    text-decoration: none;
+    background-color: #e02e5b;
+    color: white;
+    border: 1px solid #e82b63;
+    font-size: 16px;
+    border-radius: 20px;
+    color: white;
+    width: 180px;
+    padding: 5px 15px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    height: 36px;
+    cursor: pointer;
+}
+@media all and (max-width:668px){
+    .reviewArea{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .deliveryForm{
+        width: 100%;
+    }
+    .ProductReview{
+        width: 100%;
+    }
+}

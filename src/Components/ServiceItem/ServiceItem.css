@@ -1,0 +1,18 @@
+.service{
+    display: flex;
+}
+.service img {
+    height: 162px;
+    width: 265px;
+    border: 2px solid #caa7a7;
+    margin-bottom: 3px;
+}
+
+@media all and (max-width:800px){
+    .service{
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid rgb(212, 204, 204);
+        
+    }
+}

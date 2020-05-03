@@ -1,0 +1,75 @@
+.logInForm{
+    background-image: url("../../Image/signIn-background.png");
+    height: 440px;
+    width:90%;
+    margin: 20px auto;
+    background-position:center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Bitter', serif;
+    border-radius: 10px;
+}
+.logInForm img {
+    margin: 2px;
+    color: black;
+    background-color: #150e0e;
+    width: 135px;
+    padding: 10px;
+    border: 2px solid goldenrod;
+    border-radius: 6px;
+}
+.formArea {
+    text-align: center;
+}
+.formArea p {
+    color: #14a4bb;
+    font-size: 11px;
+    margin: 3px;
+    font-weight: 540;
+    letter-spacing: 1px;
+    word-spacing: 1px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.formArea p:hover {
+    color: rgb(66, 94, 110);
+
+}
+
+.logInFormInput {
+    margin: 4px;
+    padding: 7px;
+    border: none;
+    width: 272px;
+    font-size: 12px;
+    height: 34px;
+    background-color: white;
+    border: 1px solid #f5e1b1;
+    border-radius: 3px;
+}
+.logInFormInput:focus{
+    outline: none;
+}
+
+.signInButton {
+    height: 35px;
+    width: 272px;
+    background-color: #d8203ef0;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #f1eade;
+    letter-spacing: 0.5px;
+    border-radius: 3px;
+    margin-top: 6px;
+    transition: .3s;
+}
+.signInButton:hover {
+    background-color: #d60125f0;
+}
+.signInButton:focus {
+    outline: none;
+}

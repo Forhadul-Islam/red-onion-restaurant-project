@@ -1,0 +1,32 @@
+.servicesContainer{
+    display: flex;
+    flex-direction: column;
+}
+.servicesContainer img {
+    width: 250px;
+    margin: 6px;
+}
+.serviceItems {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+
+@media all and  (max-width:700px){
+    .serviceItems{
+        display: flex;
+        flex-direction: column-reverse;
+        /* justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 15px; */
+
+    }
+    .serviceContainer{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+}
