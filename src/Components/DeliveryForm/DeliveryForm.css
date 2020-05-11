@@ -28,8 +28,8 @@
     height: 30px;
     color: #1d2f2f;
     font-weight: 500;
-    background-color: #eadeb5;
-    border: 1px solid #d2a32f;
+    background-color: #fffaf3;
+    border: 1px solid #f3dbd1;
     border-radius: 1px;
 }
 .formInput:focus{

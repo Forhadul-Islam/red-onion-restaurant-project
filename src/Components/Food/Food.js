@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './Food.css'
 import fakeData from '../../resourses/fakeData';
-// import lunchItem from '../../resourses/fakeData/lunch'
-// import dinnerItem from '../../resourses/fakeData/dinner'
-// import breakfastItem from '../../resourses/fakeData/breakfast'
+import lunch from '../../resourses/fakeData/lunch'
+import dinner from '../../resourses/fakeData/dinner'
+import breakfast from '../../resourses/fakeData/breakfast'
 import Product from '../Product/Product';
 import { getDatabaseCart } from '../../utilities/databaseManager';
 import { Link } from 'react-router-dom';
+import Nav from 'react-bootstrap/Nav'
 
 const Food = () => {
-    const [products, setProducts] = useState(fakeData);
+    const [products, setProducts] = useState(breakfast);
     const [cart, setCart] = useState([]);
+
+    // //tis way is pretty well
+    // const [selectType, setSelectType] = useState("Breakfast");
+    // const selectedFood = fakeData.filter(food => food.type === selectType);
+
     useEffect(() => {
         const savedCart = getDatabaseCart();
         const productKey = Object.keys(savedCart);
@@ -29,11 +35,19 @@ const Food = () => {
         <div>
 
             <div className="foodContainer">
-                <div className="itemType">
-                    <a className="itemLink" activeStyle={{ color: "red" }} href="/">Breakfast</a>
-                    <a className="itemLink" href="/">Lunch</a>
-                    <a className="itemLink" href="/">Dinner</a>
-                </div>
+                <Nav className="itemType" activeKey="Breakfast">
+                    <Nav.Item>
+                        <Nav.Link className="itemLink" eventKey="Breakfast" onClick={() => setProducts(breakfast)}>Breakfast</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link className="itemLink" eventKey="Lunch" onClick={() => setProducts(lunch)}>Lunch</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link className="itemLink" eventKey="Dinner" onClick={() => setProducts(dinner)}>Dinner</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                    </Nav.Item>
+                </Nav>
                 <div>
                     <div className="product">
                         {

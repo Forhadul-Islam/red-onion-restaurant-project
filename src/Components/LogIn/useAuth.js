@@ -1,12 +1,13 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import firebaseConfig from '../../firebaseAuthConfig';
 import { Route, Redirect } from 'react-router-dom';
 import DeliveryForm from '../DeliveryForm/DeliveryForm';
+import firebaseConfig from '../firebaseAuthConfig/firebaseAuthConfig';
 
 
 firebase.initializeApp(firebaseConfig);
+
 
 const AuthContext = createContext()
 export const AuthContextProvider = (props) => {
