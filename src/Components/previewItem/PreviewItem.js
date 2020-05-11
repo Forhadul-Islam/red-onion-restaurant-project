@@ -119,7 +119,7 @@ const PreviewItem = (props) => {
 
 
     return (
-        <div >
+        <div className="checkoutProduct" >
             <div className="cartArea">
                 <table>
                     <tr>
@@ -150,23 +150,19 @@ const PreviewItem = (props) => {
                         <div className="cartItemArea" >
                             <div className="itemImage"> <img src={product.img} alt="" /></div>
                             <div className="itemInfo">
-                                <h6 style={{ fontSize: "13px" }}>{product.name}</h6>
+                                <h6 style={{ fontSize: "11px" }}>{product.name}</h6>
                                 <h4 className="price">${product.price}</h4>
                             </div>
                             <div className="itemQuantityManage">
 
                                 <div>
-                                    <button
-                                        onClick={() => handleDecrease(product)}
-                                    >
+                                    <button onClick={() => handleDecrease(product)}>
                                         <FontAwesomeIcon className="quantityIcon" icon={faMinus} />
                                     </button>
                                     <p className="quantity">
                                         {product.quantity}
                                     </p>
-                                    <button
-                                        onClick={() => handleAddProduct(product)}
-                                    >
+                                    <button onClick={() => handleAddProduct(product)}>
                                         <FontAwesomeIcon className="quantityIcon" icon={faPlus} />
                                     </button>
                                 </div>

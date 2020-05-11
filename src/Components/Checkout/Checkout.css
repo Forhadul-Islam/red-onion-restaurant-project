@@ -13,9 +13,9 @@
 }
 .cartButton {
     text-decoration: none;
-    background-color: #e02e5b;
+    background-color: #ca0323f0;
     color: white;
-    border: 1px solid #e82b63;
+    /* border: 1px solid #e82b63; */
     font-size: 16px;
     border-radius: 20px;
     color: white;
@@ -25,8 +25,9 @@
     font-weight: 700;
     height: 36px;
     cursor: pointer;
+    transition: .5s;
 }
-@media all and (max-width:668px){
+@media all and (max-width:768px){
     .reviewArea{
         display: flex;
         flex-direction: column;

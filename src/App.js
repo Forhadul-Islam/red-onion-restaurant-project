@@ -2,7 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import NavBar from './Components/NavBar/NavBar';
 import Container from './Components/Container/Container';
-import NotFound from './Components/NotFound/NotFound'
+import NotFound from './Components/NotFound/NotFound';
+import '../src/App.css'
 
 import {
   BrowserRouter as Router,
@@ -13,7 +14,7 @@ import {
 import ProductPreview from './Components/ProductPreview/ProductPreview';
 import Checkout from './Components/Checkout/Checkout';
 import LogIn from './Components/LogIn/LogIn';
-import { AuthContextProvider } from './Components/LogIn/useAuth';
+import { AuthContextProvider, PrivateRoute } from './Components/LogIn/useAuth';
 
 
 function App() {
@@ -32,9 +33,9 @@ function App() {
             <Route path="/home">
               <Container></Container>
             </Route>
-            <Route path="/checkout">
+            < PrivateRoute path="/checkout">
               <Checkout></Checkout>
-            </Route>
+            </ PrivateRoute>
             <Route path="/logIn">
               <LogIn></LogIn>
             </Route>

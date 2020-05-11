@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Product.css'
 import { Link } from 'react-router-dom'
+import { getDatabaseCart } from '../../utilities/databaseManager';
 const Product = (props) => {
     const { name, img, message, price, key } = props.product;
 

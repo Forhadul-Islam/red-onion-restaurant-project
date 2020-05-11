@@ -3,6 +3,7 @@ import './Checkout.css'
 import { getDatabaseCart } from '../../utilities/databaseManager';
 import fakeData from '../../resourses/fakeData';
 import PreviewItem from '../previewItem/PreviewItem';
+import DeliveryForm from '../DeliveryForm/DeliveryForm';
 
 const Checkout = () => {
     const [cart, setCart] = useState([]);
@@ -22,7 +23,9 @@ const Checkout = () => {
         <div>
             <div></div>
             <div className="reviewArea">
-                <div className="deliveryForm"></div>
+                <div className="deliveryForm">
+                    <DeliveryForm></DeliveryForm>
+                </div>
                 <div className="ProductReview">
                     <PreviewItem
                         cart={cart}

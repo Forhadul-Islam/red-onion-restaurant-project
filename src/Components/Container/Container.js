@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import Food from '../Food/Food';
 import Services from '../Services/Services';
 import Footer from '../Footer/Footer';
+import ScrollToTop from '../ScrollToTop/ScrollToTop';
 
 
 const Container = () => {
@@ -11,6 +12,9 @@ const Container = () => {
         <div>
             <div className="headerBanner">
                 <Header></Header>
+            </div>
+            <div>
+                <ScrollToTop></ScrollToTop>
             </div>
             <div className="product">
                 <Food></Food>

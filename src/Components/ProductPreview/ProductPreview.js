@@ -73,6 +73,16 @@ const ProductPreview = () => {
         addToDatabaseCart(product.key, count)
     }
 
+    useEffect(() => {
+        // const { productKey } = useParams();
+        const savedCart = getDatabaseCart();
+        // const productKey = Object.keys(savedCart);
+        if (savedCart[productKey]) {
+
+            document.querySelector("#quantity").innerHTML = savedCart[productKey]
+        }
+    })
+
     return (
         <div style={{ backgroundColor: "aliceblue", height: " 100 %" }}>
             <div>
@@ -112,7 +122,7 @@ const ProductPreview = () => {
                                     <FontAwesomeIcon className="quantityIcon" icon={faMinus} />
                                 </button>
                                 <p id="quantity">
-                                    1
+                                    Zero
                                 </p>
                                 <button
                                     style={{ backgroundColor: "transparent" }}

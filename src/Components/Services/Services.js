@@ -21,6 +21,7 @@ const Services = () => {
             <div className="serviceItems">
                 {
                     serviceInfo.map(service => <ServiceItem
+
                         services={service}
                     ></ServiceItem>)
                 }

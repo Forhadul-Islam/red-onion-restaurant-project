@@ -7,11 +7,22 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 
 
 const LogIn = () => {
+    const auth = useAuth();
     const user = useAuth().user;
     const handleSwitchToSignIn = useAuth().handleSwitchToSignIn;
     const handleSwitchToLogin = useAuth().handleSwitchToLogin;
     const handleChange = useAuth().handleChange;
     const createAccount = useAuth().createAccount
+    const signInWithEmailAndPassword = useAuth().signInWithEmailAndPassword;
+    const signInWithGoogle = () => {
+        auth.signInWithGoogle()
+            .then(res => {
+                window.location.pathname = "/checkout"
+            })
+    }
+    const signOut = useAuth().signOut;
+
+
 
 
 
@@ -21,7 +32,10 @@ const LogIn = () => {
             <div>
                 <img src={logo} alt="" />
             </div>
-            <div className="formArea">
+            <div
+                // style={{ display: user.isSignedInWithGoogle ? "none" : "block" }} 
+                className="formArea"
+            >
                 <form
                     onSubmit={createAccount}
                     style={{ display: user.hasAnAccount ? "none" : "block" }}
@@ -67,12 +81,16 @@ const LogIn = () => {
                         type="submit"
                         value="Sign in" />
                 </form>
-                <form style={{ display: user.hasAnAccount ? "block" : "none" }} action="">
+
+                <form
+                    onSubmit={signInWithEmailAndPassword}
+                    style={{ display: user.hasAnAccount ? "block" : "none" }}
+                    action="">
                     <input
                         onBlur={handleChange}
                         className="logInFormInput"
                         type="text"
-                        name="name"
+                        name="email"
                         autoComplete="off"
                         placeholder="Email" />
                     <br />
@@ -97,14 +115,33 @@ const LogIn = () => {
                         : <p onClick={handleSwitchToLogin}>Already have an account?</p>
                 }
 
-                <button
+                {
+                    user.error && <p style={{ color: "red" }}>{user.error}!!</p>
+
+                }
+
+
+            </div>
+            <small style={{ color: "#545b62", fontSize: "15px" }}>or</small>
+
+            {
+                user.isSignedIn ? <button
+                    onClick={signOut}
                     className="signInButton"
                     style={{ backgroundColor: "#344452", fontSize: "14px", fontWeight: "400" }}
                 >
-                    <FontAwesomeIcon icon={faGlobe} /> Sign in with google
+                    <FontAwesomeIcon icon={faGlobe} /> Sign out
+                </button>
+                    : <button
+
+                        onClick={signInWithGoogle}
+                        className="signInButton"
+                        style={{ backgroundColor: "#344452", fontSize: "14px", fontWeight: "400" }}
+                    >
+                        <FontAwesomeIcon icon={faGlobe} /> Sign in with google
                 </button>
 
-            </div>
+            }
 
         </div>
     );

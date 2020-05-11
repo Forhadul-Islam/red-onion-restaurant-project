@@ -15,8 +15,8 @@ nav img {
     align-items: center;
 }
 .logInLink{
-    margin-right: 10px;
-    margin-left: 25px;
+    /* margin-right: 10px;
+    margin-left: 25px; */
     cursor: pointer;
     text-decoration: none;
     border: none;
@@ -50,4 +50,22 @@ nav img {
 }
 .logIn a:hover {
     text-decoration: none;
+}
+.logInArea {
+    display: flex;
+    flex-direction: row;
+    width: 175px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.loggedInUser {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 200px;
+    align-items: center;
+}
+.loggedInUser small {
+    color: #696c6f;
 }

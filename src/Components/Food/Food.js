@@ -5,7 +5,7 @@ import fakeData from '../../resourses/fakeData';
 // import dinnerItem from '../../resourses/fakeData/dinner'
 // import breakfastItem from '../../resourses/fakeData/breakfast'
 import Product from '../Product/Product';
-import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseManager';
+import { getDatabaseCart } from '../../utilities/databaseManager';
 import { Link } from 'react-router-dom';
 
 const Food = () => {
@@ -21,46 +21,51 @@ const Food = () => {
         })
         setCart(cartProduct);
     }, [])
-    console.log(cart)
+
+
+
 
     return (
-        <div className="foodContainer">
-            <div className="itemType">
-                <a className="itemLink" href="/">Breakfast</a>
-                <a className="itemLink" href="/">Lunch</a>
-                <a className="itemLink" href="/">Dinner</a>
-            </div>
-            <div>
-                <div className="product">
-                    {
-                        products.map(product => <Product
-                            key={product.key}
-                            product={product}
-                        >
-                        </Product>)
-                    }
+        <div>
 
+            <div className="foodContainer">
+                <div className="itemType">
+                    <a className="itemLink" activeStyle={{ color: "red" }} href="/">Breakfast</a>
+                    <a className="itemLink" href="/">Lunch</a>
+                    <a className="itemLink" href="/">Dinner</a>
                 </div>
                 <div>
-                    {
-                        cart.length ? <Link to="/checkout">
-                            <button
-                                style={{ display: "block", margin: "auto" }}
-                                className="btn btn-danger">
-                                Checkout your food
-                        </button>
-                        </Link>
-                            : <button disabled
-                                style={{ display: "block", margin: "auto" }}
-                                className="btn btn-danger">
-                                Checkout your food
-                        </button>
-                    }
+                    <div className="product">
+                        {
+                            products.map(product => <Product
+                                key={product.key}
+                                product={product}
+                            >
+                            </Product>)
+                        }
 
+                    </div>
+                    <div>
+                        {
+                            cart.length ? <Link style={{ textDecoration: "none" }} to="/checkout">
+                                <button
+                                    style={{ display: "block", margin: "auto" }}
+                                    className="btn btn-danger">
+                                    Checkout your food
+                        </button>
+                            </Link>
+                                : <button disabled
+                                    style={{ display: "block", margin: "auto" }}
+                                    className="btn btn-danger">
+                                    Checkout your food
+                        </button>
+                        }
+
+                    </div>
                 </div>
+
+
             </div>
-
-
         </div>
     );
 };
