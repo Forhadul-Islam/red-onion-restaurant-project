@@ -1,67 +1,81 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import fakeData from '../../resourses/fakeData';
 import './ProductPreview.css';
-import { Button } from '@material-ui/core';
 import { faShoppingCart, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getDatabaseCart, addToDatabaseCart } from '../../utilities/databaseManager';
-import { prettyDOM } from '@testing-library/react';
-
+import NavBar from '../NavBar/NavBar';
 
 
 const ProductPreview = () => {
-
     const { productKey } = useParams();
-    const product = fakeData.find(product => product.key === productKey)
-    const { name, type, img, key, price, message } = product;
+    const [currentProduct, setCurrentProduct] = useState([]);
+    const { name, type, img, price } = currentProduct;
     const [cart, setCart] = useState([]);
+
+    useEffect(() => {
+        fetch('https://red-onion-shopping.herokuapp.com/products/' + productKey)
+            .then(res => res.json())
+            .then(data => {
+                setCurrentProduct(data);
+            })
+    }, [productKey])
+
+
     useEffect(() => {
         const savedCart = getDatabaseCart();
         const productKey = Object.keys(savedCart);
-        const cartProduct = productKey.map(key => {
-            const product = fakeData.find(product => product.key === key);
-            product.quantity = savedCart[key];
-            return product
+        fetch('https://red-onion-shopping.herokuapp.com/products/getProductsByKey', {
+            method: 'POST',
+            body: JSON.stringify(productKey),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
-        setCart(cartProduct);
-    }, []);
+            .then(res => res.json())
+            .then(data => {
+                const cartProduct = productKey.map(key => {
+                    const product = data.find(product => product.key === key);
+                    product.quantity = savedCart[key];
+                    return product;
+                })
+                setCart(cartProduct);
+            })
+    }, [])
 
-    let currentProduct = cart.filter(product => product.key === productKey);
-    console.log(currentProduct)
     const handleAddProduct = product => {
         const toAddedKey = product.key;
         const sameProduct = cart.find(product => product.key === toAddedKey);
         const others = cart.filter(product => product.key !== toAddedKey);
-        let count = 1;
+        let count;
         let newCart
         if (sameProduct) {
-            product.quantity = product.quantity + 1;
-            count = product.quantity;
+            sameProduct.quantity = sameProduct.quantity + 1;
+            count = sameProduct.quantity;
             newCart = [...others, sameProduct]
             setCart(newCart)
         } else {
             product.quantity = 1;
+            count = product.quantity;
             newCart = [...others, product];
             setCart(newCart);
         }
-        document.getElementById("quantity").innerHTML = count;
-        addToDatabaseCart(product.key, count)
+        // document.getElementById("quantity").innerHTML = count;
+        addToDatabaseCart(product.key, count);
+
     }
-
-
 
 
     const handleDecrease = (product) => {
         const toAddedKey = product.key;
         const sameProduct = cart.find(product => product.key === toAddedKey);
-        const others = cart.filter(product => product.key !== toAddedKey)
+        const others = cart.filter(product => product.key !== toAddedKey);
         let count;
         let newCart;
         if (sameProduct) {
-            if (product.quantity > 0) {
-                product.quantity = product.quantity - 1;
-                count = product.quantity;
+            if (sameProduct.quantity > 0) {
+                sameProduct.quantity = sameProduct.quantity - 1;
+                count = sameProduct.quantity;
                 newCart = [...others, sameProduct]
                 setCart(newCart)
                 document.getElementById("quantity").innerHTML = count;
@@ -71,6 +85,7 @@ const ProductPreview = () => {
         }
 
         addToDatabaseCart(product.key, count)
+
     }
 
     useEffect(() => {
@@ -84,17 +99,11 @@ const ProductPreview = () => {
     })
 
     return (
-        <div style={{ backgroundColor: "aliceblue", height: " 100 %" }}>
-            <div>
-                <h4 className="cartItemNumber">
-                    <span>
-                        {cart.length}
-                    </span>
-                    <FontAwesomeIcon
-                        style={{ color: "#d63474" }}
-                        icon={faShoppingCart}
-                    />
-                </h4>
+        <div>
+            <div className="productPreviewNav">
+                <NavBar
+                    cart={cart}
+                ></NavBar>
             </div>
             <div className="previewArea ">
                 <section className="productDetail">
@@ -114,32 +123,64 @@ const ProductPreview = () => {
                             <h4 id="productPrice">${price}</h4>
                         </div>
                         <div className="quantityManagement">
-                            <div>
-                                <button
-                                    style={{ backgroundColor: "transparent" }}
-                                    onClick={() => handleDecrease(product)}
-                                >
-                                    <FontAwesomeIcon className="quantityIcon" icon={faMinus} />
-                                </button>
-                                <p id="quantity">
-                                    Zero
+                            {
+                                currentProduct.length === 0 ? <div>
+                                    <button
+                                        disabled
+                                        style={{ backgroundColor: "transparent" }}
+                                        onClick={() => handleDecrease(currentProduct)}
+                                    >
+                                        <FontAwesomeIcon className="quantityIcon" icon={faMinus} />
+                                    </button>
+                                    <p id="quantity">
+                                        Zero
                                 </p>
-                                <button
-                                    style={{ backgroundColor: "transparent" }}
-                                    onClick={() => handleAddProduct(product)}
-                                >
-                                    <FontAwesomeIcon className="quantityIcon" icon={faPlus} />
-                                </button>
-                            </div>
+                                    <button
+                                        disabled
+                                        style={{ backgroundColor: "transparent" }}
+                                        onClick={() => handleAddProduct(currentProduct)}
+                                    >
+                                        <FontAwesomeIcon className="quantityIcon" icon={faPlus} />
+                                    </button>
+                                </div>
+                                    : <div>
+                                        <button
+                                            style={{ backgroundColor: "transparent" }}
+                                            onClick={() => handleDecrease(currentProduct)}
+                                        >
+                                            <FontAwesomeIcon className="quantityIcon" icon={faMinus} />
+                                        </button>
+                                        <p id="quantity">
+                                            Zero
+                            </p>
+                                        <button
+                                            style={{ backgroundColor: "transparent" }}
+                                            onClick={() => handleAddProduct(currentProduct)}
+                                        >
+                                            <FontAwesomeIcon className="quantityIcon" icon={faPlus} />
+                                        </button>
+                                    </div>
+                            }
                         </div>
                     </div>
-                    <button
-                        onClick={() => handleAddProduct(product)}
-                        className="addToCartButton"
-                    >
-                        <FontAwesomeIcon icon={faShoppingCart} />
+                    {
+                        currentProduct.length === 0 ? <button
+                            disabled
+                            onClick={() => handleAddProduct(currentProduct)}
+                            className="addToCartButton"
+                        >
+                            <FontAwesomeIcon icon={faShoppingCart} />
+                       Add
+                  </button>
+
+                            : <button
+                                onClick={() => handleAddProduct(currentProduct)}
+                                className="addToCartButton"
+                            >
+                                <FontAwesomeIcon icon={faShoppingCart} />
                          Add
                     </button>
+                    }
                     <Link style={{ textDecoration: "none" }} to="/checkout"><h3 className="goToCart">Go to cart</h3></Link>
 
                 </section>

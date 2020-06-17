@@ -1,7 +1,7 @@
 import React from 'react';
 import './ScrollToTop.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faScroll, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 
 

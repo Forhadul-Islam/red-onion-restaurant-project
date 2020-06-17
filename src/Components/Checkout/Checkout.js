@@ -1,36 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import './Checkout.css'
 import { getDatabaseCart } from '../../utilities/databaseManager';
-import fakeData from '../../resourses/fakeData';
 import PreviewItem from '../previewItem/PreviewItem';
 import DeliveryForm from '../DeliveryForm/DeliveryForm';
+import NavBar from '../NavBar/NavBar';
 
 const Checkout = () => {
     const [cart, setCart] = useState([]);
+    const [isShipmentSubmitted, setIsShipmentSubmitted] = useState(false);
+    const handleIsShipmentSubmitted = () => {
+        setIsShipmentSubmitted(true);
+    }
+    //load cart products from database
     useEffect(() => {
         const savedCart = getDatabaseCart();
         const productKey = Object.keys(savedCart);
-        const cartItem = productKey.map(key => {
-            const product = fakeData.find(product => product.key === key);
-            product.quantity = savedCart[key];
-            return product;
+        fetch('https://red-onion-shopping.herokuapp.com/products/getProductsByKey', {
+            method: 'POST',
+            body: JSON.stringify(productKey),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
-        setCart(cartItem);
-    }, [])
+            .then(res => res.json())
+            .then(data => {
+                const cartProduct = productKey.map(key => {
+                    const product = data.find(product => product.key === key);
+                    product.quantity = savedCart[key];
+                    return product;
+                })
+                setCart(cartProduct);
+            })
+    }, []);
 
-    // console.log(cart)
     return (
         <div>
-            <div></div>
+            <div>
+                <NavBar
+                    cart={cart}
+                >
+                </NavBar>
+            </div>
             <div className="reviewArea">
                 <div className="deliveryForm">
-                    <DeliveryForm></DeliveryForm>
+                    <DeliveryForm
+                        cart={cart}
+                        handleIsShipmentSubmitted={handleIsShipmentSubmitted}
+                    ></DeliveryForm>
                 </div>
                 <div className="ProductReview">
                     <PreviewItem
-                        cart={cart}
-                    >
-                    </PreviewItem>
+                        isShipmentSubmitted={isShipmentSubmitted}
+                    ></PreviewItem>
                 </div>
             </div>
         </div>

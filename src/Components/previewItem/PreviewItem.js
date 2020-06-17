@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './PreviewItem.css';
-import { faShoppingCart, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getDatabaseCart, addToDatabaseCart } from '../../utilities/databaseManager';
-import fakeData from '../../resourses/fakeData';
-import { counter } from '@fortawesome/fontawesome-svg-core';
-import lunch from '../../resourses/fakeData/lunch';
-import fakeData2 from '../../fakeData2'
+import { getDatabaseCart, addToDatabaseCart, removeFromDatabaseCart } from '../../utilities/databaseManager';
+
 
 const PreviewItem = (props) => {
     // const [cart, setCart] = useState([]);
@@ -33,23 +30,31 @@ const PreviewItem = (props) => {
     //     const itemKey = Object.keys(savedItem);
     //     const count = savedItem[product.key] - 1
     //     addToDatabaseCart(product.key, count);
-
     // }
+
     const [cart, setCart] = useState([]);
+    //fetching cart items from database
     useEffect(() => {
         const savedCart = getDatabaseCart();
         const productKey = Object.keys(savedCart);
-        const cartProduct = productKey.map(key => {
-            const product = fakeData.find(product => product.key === key);
-            product.quantity = savedCart[key];
-            return product
+        fetch('https://red-onion-shopping.herokuapp.com/products/getProductsByKey', {
+            method: 'POST',
+            body: JSON.stringify(productKey),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
-        setCart(cartProduct);
+            .then(res => res.json())
+            .then(data => {
+                const cartProduct = productKey.map(key => {
+                    const product = data.find(product => product.key === key);
+                    product.quantity = savedCart[key];
+                    return product;
+                })
+                setCart(cartProduct);
+
+            })
     }, []);
-
-
-
-    //console.log(cart)
 
     const handleAddProduct = product => {
         const toAddedKey = product.key;
@@ -71,6 +76,13 @@ const PreviewItem = (props) => {
         addToDatabaseCart(product.key, count)
     }
 
+    const handleRemoveProduct = product => {
+        const productKey = product.key;
+        const newCart = cart.filter(product => product.key !== productKey);
+        setCart(newCart)
+        removeFromDatabaseCart(productKey);
+    }
+
     const handleDecrease = (product) => {
         const toAddedKey = product.key;
         const sameProduct = cart.find(product => product.key === toAddedKey);
@@ -78,9 +90,9 @@ const PreviewItem = (props) => {
         let count;
         let newCart;
         if (sameProduct) {
-            if (product.quantity > 0) {
-                product.quantity = product.quantity - 1;
-                count = product.quantity;
+            if (sameProduct.quantity > 0) {
+                sameProduct.quantity = sameProduct.quantity - 1;
+                count = sameProduct.quantity;
                 newCart = [...others, sameProduct]
                 setCart(newCart)
                 document.getElementsByClassName("quantity").innerHTML = count;
@@ -94,10 +106,10 @@ const PreviewItem = (props) => {
     const formattedNumber = num => {
         return num.toFixed(2)
     }
-
+    // have fun with new cart
     let subtotal = 0;
-    for (let i = 0; i < props.cart.length; i++) {
-        const cartItem = props.cart[i];
+    for (let i = 0; i < cart.length; i++) {
+        const cartItem = cart[i];
         const price = subtotal + cartItem.price * cartItem.quantity;
         subtotal = price;
     }
@@ -140,13 +152,14 @@ const PreviewItem = (props) => {
                     </tr>
                 </table>
                 <br />
-                <button className="cartButton">Place Order</button>
+                {
+                    props.isShipmentSubmitted ? <button className="cartButton btn btn-danger">Place Order</button>
+                        : <button disabled className="cartButton btn btn-danger">Place Order</button>
+                }
             </div>
             <div className="cartManagementArea">
-                {/* <h4 style={{ fontWeight: "300" }}>your items:</h4> */}
-
                 {
-                    props.cart.map(product => (
+                    cart.map(product => (
                         <div className="cartItemArea" >
                             <div className="itemImage"> <img src={product.img} alt="" /></div>
                             <div className="itemInfo">
@@ -154,7 +167,6 @@ const PreviewItem = (props) => {
                                 <h4 className="price">${product.price}</h4>
                             </div>
                             <div className="itemQuantityManage">
-
                                 <div>
                                     <button onClick={() => handleDecrease(product)}>
                                         <FontAwesomeIcon className="quantityIcon" icon={faMinus} />
@@ -165,6 +177,11 @@ const PreviewItem = (props) => {
                                     <button onClick={() => handleAddProduct(product)}>
                                         <FontAwesomeIcon className="quantityIcon" icon={faPlus} />
                                     </button>
+                                </div>
+                                <div className="removeBtn">
+                                    {
+                                        <button onClick={() => handleRemoveProduct(product)}>Remove</button>
+                                    }
                                 </div>
                             </div>
                         </div>

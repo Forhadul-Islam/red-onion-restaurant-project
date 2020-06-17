@@ -5,7 +5,7 @@ import logo from '../../logo/logo.png'
 const Footer = () => {
     return (
         <div className="footerArea">
-            <div style={{ margin: "0" }} className="row element">
+            <div style={{ margin: "0" }} className="row element imgArea">
                 <div className="col-md-6"> <img src={logo} alt="" /> </div>
                 <div className="col-md-3 supportLink">
                     <ul>

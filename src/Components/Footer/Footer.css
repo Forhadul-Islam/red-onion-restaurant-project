@@ -46,4 +46,12 @@
         align-items: center;
         
     }
+    .supportLink{
+        padding: 0;
+    }
+    .imgArea{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

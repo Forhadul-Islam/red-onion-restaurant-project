@@ -14,6 +14,7 @@ nav img {
     justify-content: space-between;
     align-items: center;
 }
+
 .logInLink{
     /* margin-right: 10px;
     margin-left: 25px; */
@@ -68,4 +69,10 @@ nav img {
 }
 .loggedInUser small {
     color: #696c6f;
+}
+
+@media all and (max-width: 768px){
+    .logIn span{
+        font-size: 12px;
+    }
 }

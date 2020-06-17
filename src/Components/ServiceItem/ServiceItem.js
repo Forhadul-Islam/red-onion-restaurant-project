@@ -3,7 +3,7 @@ import './ServiceItem.css'
 
 const ServiceItem = (props) => {
     //console.log(props)
-    const { img, icon, service, content } = props.services
+    const { img, service, content } = props.services
 
     return (
         <div className="service">

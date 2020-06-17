@@ -2,7 +2,6 @@ import React, { useState, createContext, useContext, useEffect } from 'react';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import { Route, Redirect } from 'react-router-dom';
-import DeliveryForm from '../DeliveryForm/DeliveryForm';
 import firebaseConfig from '../firebaseAuthConfig/firebaseAuthConfig';
 
 

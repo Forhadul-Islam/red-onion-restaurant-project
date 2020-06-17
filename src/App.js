@@ -1,6 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
-import NavBar from './Components/NavBar/NavBar';
 import Container from './Components/Container/Container';
 import NotFound from './Components/NotFound/NotFound';
 import '../src/App.css'
@@ -8,20 +6,20 @@ import '../src/App.css'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import ProductPreview from './Components/ProductPreview/ProductPreview';
 import Checkout from './Components/Checkout/Checkout';
 import LogIn from './Components/LogIn/LogIn';
 import { AuthContextProvider, PrivateRoute } from './Components/LogIn/useAuth';
+import ProductManagement from './Components/ProductManagment/ProductManagement';
 
 
 function App() {
   return (
     <div >
       <AuthContextProvider>
-        <NavBar></NavBar>
+        {/* <NavBar></NavBar> */}
         <Router>
           <Switch>
             <Route exact path="/">
@@ -38,6 +36,9 @@ function App() {
             </ PrivateRoute>
             <Route path="/logIn">
               <LogIn></LogIn>
+            </Route>
+            <Route to="/productManagement">
+              <ProductManagement></ProductManagement>
             </Route>
             <Route to="*">
               <NotFound></NotFound>

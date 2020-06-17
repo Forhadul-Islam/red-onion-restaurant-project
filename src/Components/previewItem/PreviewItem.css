@@ -71,8 +71,8 @@
 .itemQuantityManage {
     width: 120px ;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 .itemQuantityManage div {
@@ -104,9 +104,24 @@
     background-color: rgb(218, 211, 211);
     border-radius: 50%;
 }
+.removeBtn button {
+    font-size: 11px;
+    background-color: #d42d3d;
+    border-radius: 10px;
+    border: 1px solid #de3b1b;
+    font-weight: 500;
+    color: wheat;
+    margin-top: 7px;
+    transition: .3s;
+}
+.removeBtn button:hover{
+    background-color:#5086b3;
+    border: 1px solid #3c7fb6;
+}
 @media all and (max-width:668px){
     .cartArea{
         margin-left: 5px;
+        width: auto;
     }
     .cartManagementArea{
         overflow: hidden;
@@ -169,10 +184,9 @@
     font-family: sans-serif;
 }
 .itemQuantityManage {
-    width: 100% ;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 .itemQuantityManage div {
@@ -203,5 +217,14 @@
     width: 28px;
     background-color: rgb(218, 211, 211);
     border-radius: 50%;
+}
+.removeBtn button {
+    font-size: 11px;
+    background-color: #d42d3d;
+    border-radius: 10px;
+    border: 1px solid #de3b1b;
+    font-weight: 500;
+    color: wheat;
+    margin-top: 7px;
 }
 }

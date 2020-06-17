@@ -4,7 +4,7 @@ import serviceData from '../../resourses/servicesData'
 import ServiceItem from '../ServiceItem/ServiceItem';
 
 const Services = () => {
-    const [serviceInfo, setServiceInfo] = useState(serviceData)
+    const [serviceInfo, setServiceInfo] = useState(serviceData);
     return (
         <div className="serviceContainer container ">
             <div style={{ lineHeight: "1", margin: "40px 0 20px 0" }}>
